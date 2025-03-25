@@ -9,8 +9,8 @@
   },
   "author": "Norman",
   "license": "MIT",
+  "type": "module",
   "dependencies": {
-    "puppeteer": "^19.9.1"
-  },
-  "type": "module"
+    "puppeteer": "^24.4.0"
+  }
 }
