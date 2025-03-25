@@ -14,8 +14,8 @@ import puppeteer from "puppeteer";
     /* Enquire max page */
     const baseUrl = "https://www.metmuseum.org/art/collection/search?department=1&showOnly=highlights%7CwithImage&material=Paintings";
     await page.goto(baseUrl);
-    const pagination = await page.$$eval("button.pagination-button", buttons => buttons.map(button => button.innerText));
-    const maxPage = Number(pagination[pagination.length - 2]);
+    const paginationText = await page.$$eval("button[class^=\"pagination-controls_paginationButton\"]", buttons => buttons.map(button => button.innerText));
+    const maxPage = Number(paginationText[paginationText.length - 2]);
 
     /* Construct page urls */
     const urls = []
@@ -27,7 +27,7 @@ import puppeteer from "puppeteer";
     let imageLinks = [];
     for (let url of urls) {
         await page.goto(url)
-        const images = await page.$$eval(".result-object__image-container > img", imgs => imgs.map(img => img.getAttribute("src")));
+        const images = await page.$$eval('figure[class^="collection-object"] img[class^="collection-object_image"]', imgs => imgs.map(img => img.src));
         imageLinks = imageLinks.concat(images)
     }
 
